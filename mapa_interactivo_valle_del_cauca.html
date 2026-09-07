@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_43be01029d9ea893d62eb526608e14a3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    
+                    <style>
+                        .foliumtooltip {
+                            
+                        }
+                       .foliumtooltip table{
+                            margin: auto;
+                        }
+                        .foliumtooltip tr{
+                            text-align: left;
+                        }
+                        .foliumtooltip th{
+                            padding: 2px; padding-right: 8px;
+                        }
+                    </style>
+            
+    
+                    <style>
+                        .foliumpopup {
+                            font-size:14px; font-family: Arial;
+                        }
+                       .foliumpopup table{
+                            margin: auto;
+                        }
+                        .foliumpopup tr{
+                            text-align: left;
+                        }
+                        .foliumpopup th{
+                            padding: 2px; padding-right: 8px;
+                        }
+                    </style>
+            
+</head>
+<body>
+    
+    
+<div style="position: fixed; top: 10px; left: 50px; z-index: 9999; background-color: white;
+            padding: 10px 18px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            font-family: Arial;">
+  <h3 style="margin:0;">Mapa coroplético - Valle del Cauca</h3>
+  <p style="margin:4px 0 0 0; font-size:13px; color:#555;">Toca un municipio para ver el valor ejecutado (2020-2025) y programado (2026)</p>
+</div>
+    <style>.leaflet-control-attribution, .leaflet-control-container .leaflet-bottom.leaflet-right {display:none !important;}</style>
+    
+            <div class="folium-map" id="map_43be01029d9ea893d62eb526608e14a3" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_43be01029d9ea893d62eb526608e14a3 = L.map(
+                "map_43be01029d9ea893d62eb526608e14a3",
+                {
+                    center: [4.0730661873638505, -76.62968507637882],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 8,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+        function geo_json_8f65049b9a60dbd0dee81be5d04e9269_styler(feature) {
+            switch(feature.id) {
+                case "0": 
+                    return {"color": "white", "fillColor": "#347ea9ff", "fillOpacity": 0.85, "weight": 1};
+                case "1": 
+                    return {"color": "white", "fillColor": "#d2f1d6ff", "fillOpacity": 0.85, "weight": 1};
+                case "2": 
+                    return {"color": "white", "fillColor": "#e8f8eaff", "fillOpacity": 0.85, "weight": 1};
+                case "3": 
+                    return {"color": "white", "fillColor": "#effaf0ff", "fillOpacity": 0.85, "weight": 1};
+                case "4": 
+                    return {"color": "white", "fillColor": "#bbe9c0ff", "fillOpacity": 0.85, "weight": 1};
+                case "5": 
+                    return {"color": "white", "fillColor": "#fcfefdff", "fillOpacity": 0.85, "weight": 1};
+                case "6": 
+                    return {"color": "white", "fillColor": "#f3fbf4ff", "fillOpacity": 0.85, "weight": 1};
+                case "7": 
+                    return {"color": "white", "fillColor": "#e2f6e4ff", "fillOpacity": 0.85, "weight": 1};
+                case "8": 
+                    return {"color": "white", "fillColor": "#f5fcf5ff", "fillOpacity": 0.85, "weight": 1};
+                case "10": 
+                    return {"color": "white", "fillColor": "#f5fcf6ff", "fillOpacity": 0.85, "weight": 1};
+                case "11": 
+                    return {"color": "white", "fillColor": "#f9fdf9ff", "fillOpacity": 0.85, "weight": 1};
+                case "12": 
+                    return {"color": "white", "fillColor": "#e4f7e7ff", "fillOpacity": 0.85, "weight": 1};
+                case "13": 
+                    return {"color": "white", "fillColor": "#71c690ff", "fillOpacity": 0.85, "weight": 1};
+                case "14": 
+                    return {"color": "white", "fillColor": "#dff5e1ff", "fillOpacity": 0.85, "weight": 1};
+                case "15": 
+                    return {"color": "white", "fillColor": "#f8fdf8ff", "fillOpacity": 0.85, "weight": 1};
+                case "16": 
+                    return {"color": "white", "fillColor": "#e4f7e6ff", "fillOpacity": 0.85, "weight": 1};
+                case "17": case "29": 
+                    return {"color": "white", "fillColor": "#ffffffff", "fillOpacity": 0.85, "weight": 1};
+                case "18": 
+                    return {"color": "white", "fillColor": "#fefffeff", "fillOpacity": 0.85, "weight": 1};
+                case "19": 
+                    return {"color": "white", "fillColor": "#5cad99ff", "fillOpacity": 0.85, "weight": 1};
+                case "20": 
+                    return {"color": "white", "fillColor": "#fdfffdff", "fillOpacity": 0.85, "weight": 1};
+                case "21": 
+                    return {"color": "white", "fillColor": "#fbfefbff", "fillOpacity": 0.85, "weight": 1};
+                case "22": 
+                    return {"color": "white", "fillColor": "#c8eeccff", "fillOpacity": 0.85, "weight": 1};
+                case "23": case "27": 
+                    return {"color": "white", "fillColor": "#fafefbff", "fillOpacity": 0.85, "weight": 1};
+                case "24": 
+                    return {"color": "white", "fillColor": "#f2fbf3ff", "fillOpacity": 0.85, "weight": 1};
+                case "25": 
+                    return {"color": "white", "fillColor": "#d6f2daff", "fillOpacity": 0.85, "weight": 1};
+                case "26": case "34": 
+                    return {"color": "white", "fillColor": "#fafefaff", "fillOpacity": 0.85, "weight": 1};
+                case "28": 
+                    return {"color": "white", "fillColor": "#dcf4dfff", "fillOpacity": 0.85, "weight": 1};
+                case "30": 
+                    return {"color": "white", "fillColor": "#ddf4e0ff", "fillOpacity": 0.85, "weight": 1};
+                case "31": 
+                    return {"color": "white", "fillColor": "#f8fdf9ff", "fillOpacity": 0.85, "weight": 1};
+                case "32": 
+                    return {"color": "white", "fillColor": "#ecf9eeff", "fillOpacity": 0.85, "weight": 1};
+                case "33": 
+                    return {"color": "white", "fillColor": "#b0e6b7ff", "fillOpacity": 0.85, "weight": 1};
+                case "35": 
+                    return {"color": "white", "fillColor": "#eefaefff", "fillOpacity": 0.85, "weight": 1};
+                case "36": 
+                    return {"color": "white", "fillColor": "#f6fcf7ff", "fillOpacity": 0.85, "weight": 1};
+                case "37": 
+                    return {"color": "white", "fillColor": "#eaf9ecff", "fillOpacity": 0.85, "weight": 1};
+                case "38": 
+                    return {"color": "white", "fillColor": "#cdefd1ff", "fillOpacity": 0.85, "weight": 1};
+                case "39": 
+                    return {"color": "white", "fillColor": "#e7f8e9ff", "fillOpacity": 0.85, "weight": 1};
+                case "40": 
+                    return {"color": "white", "fillColor": "#88d992ff", "fillOpacity": 0.85, "weight": 1};
+                case "41": 
+                    return {"color": "white", "fillColor": "#1a5fb4ff", "fillOpacity": 0.85, "weight": 1};
+                default:
+                    return {"color": "white", "fillColor": "#b8e8beff", "fillOpacity": 0.85, "weight": 1};
+            }
+        }
+        function geo_json_8f65049b9a60dbd0dee81be5d04e9269_highlighter(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#1a5fb4", "fillOpacity": 0.95, "weight": 3};
+            }
+        }
+
+        function geo_json_8f65049b9a60dbd0dee81be5d04e9269_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_8f65049b9a60dbd0dee81be5d04e9269.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_8f65049b9a60dbd0dee81be5d04e9269_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_8f65049b9a60dbd0dee81be5d04e9269 = L.geoJson(null, {
+                onEachFeature: geo_json_8f65049b9a60dbd0dee81be5d04e9269_onEachFeature,
+            
+                style: geo_json_8f65049b9a60dbd0dee81be5d04e9269_styler,
+            ...{
+}
+        });
+
+        function geo_json_8f65049b9a60dbd0dee81be5d04e9269_add (data) {
+            geo_json_8f65049b9a60dbd0dee81be5d04e9269
+                .addData(data);
+        }
+            geo_json_8f65049b9a60dbd0dee81be5d04e9269_add({"features": [{"geometry": {"coordinates": [[[-76.49135597112584, 3.506008905295031], [-76.47544200326487, 3.451472248658904], [-76.46075218677784, 3.328764771227618], [-76.49258012249976, 3.289101748219526], [-76.55868429669145, 3.282904400874512], [-76.60765035164826, 3.313891137599583], [-76.69578925057051, 3.311412198661578], [-76.70191000744012, 3.356033099545681], [-76.7068066129358, 3.427922328747849], [-76.65049564973546, 3.466345882286938], [-76.59540883790906, 3.548150867241128], [-76.59173638378729, 3.546911397772126], [-76.54766693432617, 3.499811557950016], [-76.49135597112584, 3.506008905295031]]], "type": "Polygon"}, "id": "0", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "001", "MPIO_CCNCT": "76001", "MPIO_CNMBR": "CALI", "MPIO_CRSLC": "1536", "MPIO_NANO": 2018, "MPIO_NAREA": 563.040919671, "Shape_Area": 0.045732983334, "Shape_Leng": 1.16441089631, "ejecutado": 17723453397.0, "ejecutado_fmt": "$ 17.723.453.397", "key": "SANTIAGO DE CALI", "name_norm": "CALI", "nombre_bonito": "Cali", "programado": 2156895718.0, "programado_fmt": "$ 2.156.895.718"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.07147204987122, 4.088559555726388], [-76.17185246253267, 4.119546292451458], [-76.24530154496789, 4.167885601742572], [-76.24897399908964, 4.18399870483961], [-76.23550833397653, 4.213745972095678], [-76.15104188917603, 4.182759235370606], [-76.07147204987122, 4.088559555726388]]], "type": "Polygon"}, "id": "1", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "036", "MPIO_CCNCT": "76036", "MPIO_CNMBR": "ANDALUC\u00cdA", "MPIO_CRSLC": "Ordenanza 38 de Abril 25 de 1921", "MPIO_NANO": 2018, "MPIO_NAREA": 110.460417918, "Shape_Area": 0.00898485117155, "Shape_Leng": 0.665100433063, "ejecutado": 3865271210.0, "ejecutado_fmt": "$ 3.865.271.210", "key": "ANDALUCIA", "name_norm": "ANDALUCIA", "nombre_bonito": "Andaluc\u00eda", "programado": 50000000.0, "programado_fmt": "$ 50.000.000"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.98945390781856, 4.88058054641923], [-75.91478067400942, 4.873143729605212], [-75.93559124736606, 4.807451847748061], [-75.96374672896623, 4.801254500403045], [-76.0163852380448, 4.692181187130792], [-76.08861016910609, 4.735562618545893], [-76.14736943505426, 4.785141397306008], [-76.13880037543683, 4.840917523411138], [-76.1375762240629, 4.843396462349144], [-76.07147204987122, 4.837199115004129], [-75.98945390781856, 4.88058054641923]]], "type": "Polygon"}, "id": "2", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "041", "MPIO_CCNCT": "76041", "MPIO_CNMBR": "ANSERMANUEVO", "MPIO_CRSLC": "Ordenanza 29 de 1925", "MPIO_NANO": 2018, "MPIO_NAREA": 305.451138434, "Shape_Area": 0.0248710771564, "Shape_Leng": 0.946044152326, "ejecutado": 2120429282.0, "ejecutado_fmt": "$ 2.120.429.282", "key": "ANSERMANUEVO", "name_norm": "ANSERMANUEVO", "nombre_bonito": "Ansermanuevo", "programado": 322208444.0, "programado_fmt": "$ 322.208.444"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.08861016910609, 4.735562618545893], [-76.12288640757586, 4.651278694653696], [-76.19388718726323, 4.682265431378768], [-76.14736943505426, 4.785141397306008], [-76.08861016910609, 4.735562618545893]]], "type": "Polygon"}, "id": "3", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "054", "MPIO_CCNCT": "76054", "MPIO_CNMBR": "ARGELIA", "MPIO_CRSLC": "Ordenanza 15 de 1956", "MPIO_NANO": 2018, "MPIO_NAREA": 90.7960436773, "Shape_Area": 0.00739101749053, "Shape_Leng": 0.453826062401, "ejecutado": 1593151727.0, "ejecutado_fmt": "$ 1.593.151.727", "key": "ARGELIA", "name_norm": "ARGELIA", "nombre_bonito": "Argelia", "programado": 248403460.0, "programado_fmt": "$ 248.403.460"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.3126298705335, 3.993120406613164], [-76.22693927435908, 3.932386402632023], [-76.14124867818467, 3.903878604844957], [-76.1008516828453, 3.95717579201208], [-76.08371356361042, 3.906357543782963], [-75.998022967436, 3.893962849092933], [-75.87315952729614, 3.92618905528701], [-75.84990065119166, 3.889004971216922], [-75.91722897675727, 3.748944921219596], [-75.9551776693488, 3.714239776087515], [-75.99924711880992, 3.756381738033613], [-76.0824894122365, 3.770015902192645], [-76.10452413696706, 3.819594680952761], [-76.17797321940228, 3.804721047324726], [-76.27712948068981, 3.838186722987803], [-76.37261328785559, 3.812157864138744], [-76.3126298705335, 3.993120406613164]]], "type": "Polygon"}, "id": "4", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "111", "MPIO_CCNCT": "76111", "MPIO_CNMBR": "GUADALAJARA DE BUGA", "MPIO_CRSLC": "1555", "MPIO_NANO": 2018, "MPIO_NAREA": 825.877248696, "Shape_Area": 0.0671583225843, "Shape_Leng": 2.00654140673, "ejecutado": 5671135662.0, "ejecutado_fmt": "$ 5.671.135.662", "key": "BUGA", "name_norm": "GUADALAJARA DE BUGA", "nombre_bonito": "Guadalajara De Buga", "programado": 1041266890.0, "programado_fmt": "$ 1.041.266.890"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.03719581140145, 4.255887934041777], [-75.95395351797487, 4.176561888025592], [-76.00169542155776, 4.102193719885419], [-76.07147204987122, 4.088559555726388], [-76.15104188917603, 4.182759235370606], [-76.23550833397653, 4.213745972095678], [-76.21224945787203, 4.259606342448786], [-76.17185246253267, 4.31786140749192], [-76.08371356361042, 4.243493239351748], [-76.03719581140145, 4.255887934041777]]], "type": "Polygon"}, "id": "5", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "113", "MPIO_CCNCT": "76113", "MPIO_CNMBR": "BUGALAGRANDE", "MPIO_CRSLC": "1791", "MPIO_NANO": 2018, "MPIO_NAREA": 396.781323359, "Shape_Area": 0.0322792939542, "Shape_Leng": 1.03360629648, "ejecutado": 543462374.0, "ejecutado_fmt": "$ 543.462.374", "key": "BUGALAGRANDE", "name_norm": "BUGALAGRANDE", "nombre_bonito": "Bugalagrande", "programado": 373422731.0, "programado_fmt": "$ 373.422.731"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.80338289898269, 4.395947984039102], [-75.79236553661741, 4.337692918995966], [-75.79481383936525, 4.310424590677902], [-75.82541762371325, 4.21498544156468], [-75.89274594927886, 4.299269365456878], [-75.85479725668733, 4.363721777845027], [-75.86703877042653, 4.410821617667137], [-75.80338289898269, 4.395947984039102]]], "type": "Polygon"}, "id": "6", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "122", "MPIO_CCNCT": "76122", "MPIO_CNMBR": "CAICEDONIA", "MPIO_CRSLC": "Ordenanza 21 del 20 de Abril de 1923", "MPIO_NANO": 2018, "MPIO_NAREA": 166.983686558, "Shape_Area": 0.0135904999142, "Shape_Leng": 0.646589992193, "ejecutado": 1291812135.0, "ejecutado_fmt": "$ 1.291.812.135", "key": "CAICEDONIA", "name_norm": "CAICEDONIA", "nombre_bonito": "Caicedonia", "programado": 294121733.0, "programado_fmt": "$ 294.121.733"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.49870087936937, 4.063770166346329], [-76.41545858594279, 4.009233509710201], [-76.42402764556023, 3.942302158384047], [-76.47789030601272, 3.865455051305867], [-76.56113259943929, 3.848102478739827], [-76.59296053516121, 3.862976112367862], [-76.71415152117932, 3.841905131394812], [-76.81453193384077, 3.875370807057891], [-76.88798101627599, 3.993120406613164], [-76.85982553467582, 4.030304490683251], [-76.68109943408348, 3.964612608826098], [-76.62478847088315, 4.015430857055216], [-76.58928808103946, 3.993120406613164], [-76.49870087936937, 4.063770166346329]]], "type": "Polygon"}, "id": "7", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "126", "MPIO_CCNCT": "76126", "MPIO_CNMBR": "CALIMA", "MPIO_CRSLC": "Ordenanza 49 de Junio 23 de 1939", "MPIO_NANO": 2018, "MPIO_NAREA": 793.497981843, "Shape_Area": 0.0644849809965, "Shape_Leng": 1.54419773864, "ejecutado": 2608474479.0, "ejecutado_fmt": "$ 2.608.474.479", "key": "CALIMA DARIEN", "name_norm": "CALIMA", "nombre_bonito": "Calima", "programado": 238344596.0, "programado_fmt": "$ 238.344.596"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.29059514580293, 3.47130376016295], [-76.32976798976837, 3.383301427863745], [-76.30038835679429, 3.365948855297704], [-76.3432336548815, 3.281664931405508], [-76.35180271449894, 3.28662280928152], [-76.46075218677784, 3.328764771227618], [-76.47544200326487, 3.451472248658904], [-76.37506159060342, 3.450232779189901], [-76.29059514580293, 3.47130376016295]]], "type": "Polygon"}, "id": "8", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "130", "MPIO_CCNCT": "76130", "MPIO_CNMBR": "CANDELARIA", "MPIO_CRSLC": "1797", "MPIO_NANO": 2018, "MPIO_NAREA": 296.473034993, "Shape_Area": 0.0240874508214, "Shape_Leng": 0.870993737631, "ejecutado": 1146152401.0, "ejecutado_fmt": "$ 1.146.152.401", "key": "CANDELARIA", "name_norm": "CANDELARIA", "nombre_bonito": "Candelaria", "programado": 1016298513.0, "programado_fmt": "$ 1.016.298.513"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.93559124736606, 4.807451847748061], [-75.85602140806125, 4.728125801731876], [-75.85602140806125, 4.713252168103841], [-75.82786592646109, 4.659954980936718], [-75.86581461905261, 4.612855141114608], [-75.97231578858367, 4.667391797750735], [-76.0163852380448, 4.666152328281731], [-76.0163852380448, 4.692181187130792], [-75.96374672896623, 4.801254500403045], [-75.93559124736606, 4.807451847748061]]], "type": "Polygon"}, "id": "9", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "147", "MPIO_CCNCT": "76147", "MPIO_CNMBR": "CARTAGO", "MPIO_CRSLC": "1863", "MPIO_NANO": 2018, "MPIO_NAREA": 248.223972096, "Shape_Area": 0.0202114813862, "Shape_Leng": 0.895557945103, "ejecutado": 5909554841.0, "ejecutado_fmt": "$ 5.909.554.841", "key": "CARTAGO", "name_norm": "CARTAGO", "nombre_bonito": "Cartago", "programado": 402821341.0, "programado_fmt": "$ 402.821.341"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.99067805919248, 4.912806752613305], [-75.98945390781856, 4.88058054641923], [-76.07147204987122, 4.837199115004129], [-76.1375762240629, 4.843396462349144], [-76.08861016910609, 4.946272428276384], [-76.07759280674081, 5.046669455265617], [-76.02740260041008, 4.938835611462366], [-75.99067805919248, 4.912806752613305]]], "type": "Polygon"}, "id": "10", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "243", "MPIO_CCNCT": "76243", "MPIO_CNMBR": "EL \u00c1GUILA", "MPIO_CRSLC": "1950", "MPIO_NANO": 2018, "MPIO_NAREA": 187.813135642, "Shape_Area": 0.015294550926, "Shape_Leng": 0.740303705497, "ejecutado": 1097358592.0, "ejecutado_fmt": "$ 1.097.358.592", "key": "EL AGUILA", "name_norm": "EL AGUILA", "nombre_bonito": "El \u00c1guila", "programado": 100071428.0, "programado_fmt": "$ 100.071.428"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.14736943505426, 4.785141397306008], [-76.19388718726323, 4.682265431378768], [-76.29794005404645, 4.698378534475806], [-76.3126298705335, 4.750436252173927], [-76.21102530649812, 4.829762298190111], [-76.13880037543683, 4.840917523411138], [-76.14736943505426, 4.785141397306008]]], "type": "Polygon"}, "id": "11", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "246", "MPIO_CCNCT": "76246", "MPIO_CNMBR": "EL CAIRO", "MPIO_CRSLC": "1947", "MPIO_NANO": 2018, "MPIO_NAREA": 214.203355217, "Shape_Area": 0.0174363017577, "Shape_Leng": 0.617222921741, "ejecutado": 828220580.0, "ejecutado_fmt": "$ 828.220.580", "key": "EL CAIRO", "name_norm": "EL CAIRO", "nombre_bonito": "El Cairo", "programado": 321652381.0, "programado_fmt": "$ 321.652.381"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.9551776693488, 3.714239776087515], [-75.96007427484447, 3.704324020335492], [-76.00659202705344, 3.716718715025521], [-76.08983432048001, 3.621279565912299], [-76.24162909084612, 3.621279565912299], [-76.29304344855076, 3.602687523877256], [-76.3677166823599, 3.627476913257313], [-76.42647594830807, 3.694408264583469], [-76.40076876945575, 3.740268634936576], [-76.39709631533398, 3.762579085378628], [-76.32119893015093, 3.706802959273498], [-76.20123209550675, 3.662182058389394], [-76.12411055894978, 3.688210917238455], [-76.0824894122365, 3.770015902192645], [-75.99924711880992, 3.756381738033613], [-75.9551776693488, 3.714239776087515]]], "type": "Polygon"}, "id": "12", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "248", "MPIO_CCNCT": "76248", "MPIO_CNMBR": "EL CERRITO", "MPIO_CRSLC": "Ordenanza 01 del 30 de Agosto de 1864", "MPIO_NANO": 2018, "MPIO_NAREA": 441.888582888, "Shape_Area": 0.0359213986196, "Shape_Leng": 1.52869531496, "ejecutado": 2400465390.0, "ejecutado_fmt": "$ 2.400.465.390", "key": "EL CERRITO", "name_norm": "EL CERRITO", "nombre_bonito": "El Cerrito", "programado": 218012079.0, "programado_fmt": "$ 218.012.079"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.18531812764579, 4.545923789788452], [-76.16573170566306, 4.512458114125373], [-76.26856042107237, 4.481471377400302], [-76.36526837961206, 4.492626602621327], [-76.30038835679429, 4.653757633591702], [-76.2832502375594, 4.594263099079564], [-76.2220426688634, 4.602939385362584], [-76.18531812764579, 4.545923789788452]]], "type": "Polygon"}, "id": "13", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "250", "MPIO_CCNCT": "76250", "MPIO_CNMBR": "EL DOVIO", "MPIO_CRSLC": "Ordenanza 14 Diciembre 19 de 1956", "MPIO_NANO": 2018, "MPIO_NAREA": 235.410117347, "Shape_Area": 0.0191549625722, "Shape_Leng": 0.973533526483, "ejecutado": 11711384218.0, "ejecutado_fmt": "$ 11.711.384.218", "key": "EL DOVIO", "name_norm": "EL DOVIO", "nombre_bonito": "El Dovio", "programado": 474999999.0, "programado_fmt": "$ 474.999.999"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.06167883887986, 3.354793630076679], [-76.03841996277536, 3.301496442909555], [-76.05555808201025, 3.223409866362373], [-76.19143888451539, 3.227128274769381], [-76.22938757710692, 3.276707053529496], [-76.3432336548815, 3.281664931405508], [-76.30038835679429, 3.365948855297704], [-76.18164567352403, 3.357272569014684], [-76.08861016910609, 3.388259305739757], [-76.06167883887986, 3.354793630076679]]], "type": "Polygon"}, "id": "14", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "275", "MPIO_CCNCT": "76275", "MPIO_CNMBR": "FLORIDA", "MPIO_CRSLC": "1630", "MPIO_NANO": 2018, "MPIO_NAREA": 401.550211378, "Shape_Area": 0.0326316236712, "Shape_Leng": 1.07643998236, "ejecutado": 2860830748.0, "ejecutado_fmt": "$ 2.860.830.748", "key": "FLORIDA", "name_norm": "FLORIDA", "nombre_bonito": "Florida", "programado": 325000000.0, "programado_fmt": "$ 325.000.000"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.0824894122365, 3.770015902192645], [-76.12411055894978, 3.688210917238455], [-76.20123209550675, 3.662182058389394], [-76.32119893015093, 3.706802959273498], [-76.30283665954212, 3.760100146440622], [-76.22081851748948, 3.768776432723643], [-76.17797321940228, 3.804721047324726], [-76.10452413696706, 3.819594680952761], [-76.0824894122365, 3.770015902192645]]], "type": "Polygon"}, "id": "15", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "306", "MPIO_CCNCT": "76306", "MPIO_CNMBR": "GINEBRA", "MPIO_CRSLC": "Ordenanza 9 de Diciembre 1954", "MPIO_NANO": 2018, "MPIO_NAREA": 268.732723093, "Shape_Area": 0.0218476923112, "Shape_Leng": 0.757605656625, "ejecutado": 886098742.0, "ejecutado_fmt": "$ 886.098.742", "key": "GINEBRA", "name_norm": "GINEBRA", "nombre_bonito": "Ginebra", "programado": 328666667.0, "programado_fmt": "$ 328.666.667"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.17797321940228, 3.804721047324726], [-76.22081851748948, 3.768776432723643], [-76.30283665954212, 3.760100146440622], [-76.32119893015093, 3.706802959273498], [-76.39709631533398, 3.762579085378628], [-76.37261328785559, 3.812157864138744], [-76.27712948068981, 3.838186722987803], [-76.17797321940228, 3.804721047324726]]], "type": "Polygon"}, "id": "16", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "318", "MPIO_CCNCT": "76318", "MPIO_CNMBR": "GUACAR\u00cd", "MPIO_CRSLC": "1864", "MPIO_NANO": 2018, "MPIO_NAREA": 162.499075303, "Shape_Area": 0.0132097834988, "Shape_Leng": 0.733473656212, "ejecutado": 2456413885.0, "ejecutado_fmt": "$ 2.456.413.885", "key": "GUACARI", "name_norm": "GUACARI", "nombre_bonito": "Guacar\u00ed", "programado": 205038913.0, "programado_fmt": "$ 205.038.913"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.70912324319083, 4.679786492440764], [-75.74095117891275, 4.654997103060705], [-75.82786592646109, 4.659954980936718], [-75.85602140806125, 4.713252168103841], [-75.70912324319083, 4.679786492440764]]], "type": "Polygon"}, "id": "17", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "020", "MPIO_CCNCT": "76020", "MPIO_CNMBR": "ALCAL\u00c1", "MPIO_CRSLC": "Ordenanza 12 de Marzo 31 de 1919", "MPIO_NANO": 2018, "MPIO_NAREA": 62.3575453941, "Shape_Area": 0.00507796460157, "Shape_Leng": 0.489800416022, "ejecutado": 344375652.0, "ejecutado_fmt": "$ 344.375.652", "key": "ALCALA", "name_norm": "ALCALA", "nombre_bonito": "Alcal\u00e1", "programado": 62792000.0, "programado_fmt": "$ 62.792.000"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.86581461905261, 4.612855141114608], [-75.86703877042653, 4.57567105704452], [-75.88050443553966, 4.531050156160417], [-75.96374672896623, 4.531050156160417], [-76.03107505453184, 4.569473709699507], [-76.03841996277536, 4.583107873858538], [-76.0163852380448, 4.666152328281731], [-75.97231578858367, 4.667391797750735], [-75.86581461905261, 4.612855141114608]]], "type": "Polygon"}, "id": "18", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "497", "MPIO_CCNCT": "76497", "MPIO_CNMBR": "OBANDO", "MPIO_CRSLC": "Ordenanza 21 de 1928", "MPIO_NANO": 2018, "MPIO_NAREA": 214.677027079, "Shape_Area": 0.0174766785396, "Shape_Leng": 0.718547456375, "ejecutado": 429834379.0, "ejecutado_fmt": "$ 429.834.379", "key": "OBANDO", "name_norm": "OBANDO", "nombre_bonito": "Obando", "programado": 323868730.0, "programado_fmt": "$ 323.868.730"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.96007427484447, 3.704324020335492], [-75.99312636194031, 3.60888487122227], [-75.98455730232288, 3.559306092462155], [-76.03719581140145, 3.452711718127906], [-76.12166225620194, 3.476261638038961], [-76.29059514580293, 3.47130376016295], [-76.37506159060342, 3.450232779189901], [-76.47544200326487, 3.451472248658904], [-76.49135597112584, 3.506008905295031], [-76.42647594830807, 3.680774100424437], [-76.42647594830807, 3.694408264583469], [-76.3677166823599, 3.627476913257313], [-76.29304344855076, 3.602687523877256], [-76.24162909084612, 3.621279565912299], [-76.08983432048001, 3.621279565912299], [-76.00659202705344, 3.716718715025521], [-75.96007427484447, 3.704324020335492]]], "type": "Polygon"}, "id": "19", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "520", "MPIO_CCNCT": "76520", "MPIO_CNMBR": "PALMIRA", "MPIO_CRSLC": "1824", "MPIO_NANO": 2018, "MPIO_NAREA": 1005.15343961, "Shape_Area": 0.0816970287806, "Shape_Leng": 2.06391705148, "ejecutado": 13808465973.0, "ejecutado_fmt": "$ 13.808.465.973", "key": "PALMIRA", "name_norm": "PALMIRA", "nombre_bonito": "Palmira", "programado": 2209558430.0, "programado_fmt": "$ 2.209.558.430"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.03719581140145, 3.452711718127906], [-76.06167883887986, 3.354793630076679], [-76.08861016910609, 3.388259305739757], [-76.18164567352403, 3.357272569014684], [-76.30038835679429, 3.365948855297704], [-76.32976798976837, 3.383301427863745], [-76.29059514580293, 3.47130376016295], [-76.12166225620194, 3.476261638038961], [-76.03719581140145, 3.452711718127906]]], "type": "Polygon"}, "id": "20", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "563", "MPIO_CCNCT": "76563", "MPIO_CNMBR": "PRADERA", "MPIO_CRSLC": "1870", "MPIO_NANO": 2018, "MPIO_NAREA": 356.731061348, "Shape_Area": 0.0289923038254, "Shape_Leng": 0.977379591137, "ejecutado": 488387136.0, "ejecutado_fmt": "$ 488.387.136", "key": "PRADERA", "name_norm": "PRADERA", "nombre_bonito": "Pradera", "programado": 178000000.0, "programado_fmt": "$ 178.000.000"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.47789030601272, 3.865455051305867], [-76.46809709502136, 3.830749906173786], [-76.5366495719609, 3.748944921219596], [-76.60275374615259, 3.751423860157602], [-76.56113259943929, 3.848102478739827], [-76.47789030601272, 3.865455051305867]]], "type": "Polygon"}, "id": "21", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "606", "MPIO_CCNCT": "76606", "MPIO_CNMBR": "RESTREPO", "MPIO_CRSLC": "Ordenanza 30  del 1 de Abril de 1925", "MPIO_NANO": 2018, "MPIO_NAREA": 136.232017755, "Shape_Area": 0.0110709873663, "Shape_Leng": 0.596118645664, "ejecutado": 650735339.0, "ejecutado_fmt": "$ 650.735.339", "key": "RESTREPO", "name_norm": "RESTREPO", "nombre_bonito": "Restrepo", "programado": 195785714.0, "programado_fmt": "$ 195.785.714"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.24897399908964, 4.18399870483961], [-76.24530154496789, 4.167885601742572], [-76.30283665954212, 4.067488574753337], [-76.41545858594279, 4.009233509710201], [-76.49870087936937, 4.063770166346329], [-76.44851067303864, 4.161688254397557], [-76.34813026037718, 4.159209315459551], [-76.32609553564662, 4.195153930060634], [-76.24897399908964, 4.18399870483961]]], "type": "Polygon"}, "id": "22", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "616", "MPIO_CCNCT": "76616", "MPIO_CNMBR": "RIOFR\u00cdO", "MPIO_CRSLC": "Ordenanza 31 del 3 de Abril de 1923", "MPIO_NANO": 2018, "MPIO_NAREA": 308.087796099, "Shape_Area": 0.025051849657, "Shape_Leng": 1.0055740764, "ejecutado": 4657858035.0, "ejecutado_fmt": "$ 4.657.858.035", "key": "RIOFRIO", "name_norm": "RIOFRIO", "nombre_bonito": "Riofr\u00edo", "programado": 254187924.0, "programado_fmt": "$ 254.187.924"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.16573170566306, 4.512458114125373], [-76.06535129300161, 4.492626602621327], [-76.06902374712337, 4.455442518551241], [-76.14859358642819, 4.372398064128047], [-76.25631890733317, 4.402145331384117], [-76.26856042107237, 4.481471377400302], [-76.16573170566306, 4.512458114125373]]], "type": "Polygon"}, "id": "23", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "622", "MPIO_CCNCT": "76622", "MPIO_CNMBR": "ROLDANILLO", "MPIO_CRSLC": "1576", "MPIO_NANO": 2018, "MPIO_NAREA": 235.726651522, "Shape_Area": 0.0191812458158, "Shape_Leng": 0.844310914721, "ejecutado": 707568513.0, "ejecutado_fmt": "$ 707.568.513", "key": "ROLDANILLO", "name_norm": "ROLDANILLO", "nombre_bonito": "Roldanillo", "programado": 483401030.0, "programado_fmt": "$ 483.401.030"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.1008516828453, 3.95717579201208], [-76.14124867818467, 3.903878604844957], [-76.22693927435908, 3.932386402632023], [-76.3126298705335, 3.993120406613164], [-76.30038835679429, 4.048896532718295], [-76.16205925154131, 4.022867673869234], [-76.1008516828453, 3.95717579201208]]], "type": "Polygon"}, "id": "24", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "670", "MPIO_CCNCT": "76670", "MPIO_CNMBR": "SAN PEDRO", "MPIO_CRSLC": "Ordenanza 33 de 1988", "MPIO_NANO": 2018, "MPIO_NAREA": 202.128604639, "Shape_Area": 0.0164369637202, "Shape_Leng": 0.77983161691, "ejecutado": 1319885658.0, "ejecutado_fmt": "$ 1.319.885.658", "key": "SAN PEDRO", "name_norm": "SAN PEDRO", "nombre_bonito": "San Pedro", "programado": 94285714.0, "programado_fmt": "$ 94.285.714"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.86703877042653, 4.410821617667137], [-75.85479725668733, 4.363721777845027], [-75.89274594927886, 4.299269365456878], [-75.82541762371325, 4.21498544156468], [-75.8401074402003, 4.100954250416416], [-75.75196854127805, 4.077404330505361], [-75.74584778440844, 4.04269918537328], [-75.82296932096541, 3.905118074313959], [-75.85479725668733, 4.050136002187298], [-75.9013150088963, 4.084841147319379], [-75.9135565226355, 4.175322418556588], [-75.95395351797487, 4.176561888025592], [-76.03719581140145, 4.255887934041777], [-76.02128184354048, 4.301748304394883], [-75.95395351797487, 4.325298224305937], [-75.95150521522703, 4.372398064128047], [-75.87805613279183, 4.409582148198133], [-75.86703877042653, 4.410821617667137]]], "type": "Polygon"}, "id": "25", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "736", "MPIO_CCNCT": "76736", "MPIO_CNMBR": "SEVILLA", "MPIO_CRSLC": "Ordenanza 26 del 2 de Abril de 1914", "MPIO_NANO": 2018, "MPIO_NAREA": 537.183992779, "Shape_Area": 0.043711621665, "Shape_Leng": 1.80387241626, "ejecutado": 3500574840.0, "ejecutado_fmt": "$ 3.500.574.840", "key": "SEVILLA", "name_norm": "SEVILLA", "nombre_bonito": "Sevilla", "programado": 483094330.0, "programado_fmt": "$ 483.094.330"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.0163852380448, 4.692181187130792], [-76.0163852380448, 4.666152328281731], [-76.03841996277536, 4.583107873858538], [-76.15104188917603, 4.57567105704452], [-76.12288640757586, 4.651278694653696], [-76.08861016910609, 4.735562618545893], [-76.0163852380448, 4.692181187130792]]], "type": "Polygon"}, "id": "26", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "823", "MPIO_CCNCT": "76823", "MPIO_CNMBR": "TORO", "MPIO_CRSLC": "1632", "MPIO_NANO": 2018, "MPIO_NAREA": 175.763653401, "Shape_Area": 0.0143073485918, "Shape_Leng": 0.660025027592, "ejecutado": 733578397.0, "ejecutado_fmt": "$ 733.578.397", "key": "TORO", "name_norm": "TORO", "nombre_bonito": "Toro", "programado": 310396303.0, "programado_fmt": "$ 310.396.303"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.21224945787203, 4.259606342448786], [-76.23550833397653, 4.213745972095678], [-76.24897399908964, 4.18399870483961], [-76.32609553564662, 4.195153930060634], [-76.34813026037718, 4.159209315459551], [-76.44851067303864, 4.161688254397557], [-76.45463142990823, 4.229859075192715], [-76.40688952632534, 4.299269365456878], [-76.29671590267253, 4.294311487580865], [-76.21224945787203, 4.259606342448786]]], "type": "Polygon"}, "id": "27", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "828", "MPIO_CCNCT": "76828", "MPIO_CNMBR": "TRUJILLO", "MPIO_CRSLC": "Ordenanza 39 de Mayo 3 de 1932", "MPIO_NANO": 2018, "MPIO_NAREA": 307.642093695, "Shape_Area": 0.0250204370846, "Shape_Leng": 0.885376333731, "ejecutado": 703537095.0, "ejecutado_fmt": "$ 703.537.095", "key": "TRUJILLO", "name_norm": "TRUJILLO", "nombre_bonito": "Trujillo", "programado": 317090589.0, "programado_fmt": "$ 317.090.589"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.82296932096541, 3.905118074313959], [-75.84990065119166, 3.889004971216922], [-75.87315952729614, 3.92618905528701], [-75.998022967436, 3.893962849092933], [-76.08371356361042, 3.906357543782963], [-76.1008516828453, 3.95717579201208], [-76.16205925154131, 4.022867673869234], [-76.30038835679429, 4.048896532718295], [-76.30283665954212, 4.067488574753337], [-76.24530154496789, 4.167885601742572], [-76.17185246253267, 4.119546292451458], [-76.07147204987122, 4.088559555726388], [-76.00169542155776, 4.102193719885419], [-75.95395351797487, 4.176561888025592], [-75.9135565226355, 4.175322418556588], [-75.9013150088963, 4.084841147319379], [-75.85479725668733, 4.050136002187298], [-75.82296932096541, 3.905118074313959]]], "type": "Polygon"}, "id": "28", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "834", "MPIO_CCNCT": "76834", "MPIO_CNMBR": "TULU\u00c1", "MPIO_CRSLC": "1824", "MPIO_NANO": 2018, "MPIO_NAREA": 909.358972232, "Shape_Area": 0.0739685948424, "Shape_Leng": 1.95496636906, "ejecutado": 3088430244.0, "ejecutado_fmt": "$ 3.088.430.244", "key": "TULUA", "name_norm": "TULUA", "nombre_bonito": "Tulu\u00e1", "programado": 887880641.0, "programado_fmt": "$ 887.880.641"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.71401984868652, 4.713252168103841], [-75.70912324319083, 4.679786492440764], [-75.85602140806125, 4.713252168103841], [-75.85602140806125, 4.728125801731876], [-75.71401984868652, 4.713252168103841]]], "type": "Polygon"}, "id": "29", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "845", "MPIO_CCNCT": "76845", "MPIO_CNMBR": "ULLOA", "MPIO_CRSLC": "Ordenanza 20 de Abril 26 de 1928", "MPIO_NANO": 2018, "MPIO_NAREA": 41.8608774491, "Shape_Area": 0.00340901160131, "Shape_Leng": 0.514650706012, "ejecutado": 287699695.0, "ejecutado_fmt": "$ 287.699.695", "key": "ULLOA", "name_norm": "ULLOA", "nombre_bonito": "Ulloa", "programado": 3704400.0, "programado_fmt": "$ 3.704.400"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.19388718726323, 4.682265431378768], [-76.12288640757586, 4.651278694653696], [-76.15104188917603, 4.57567105704452], [-76.18531812764579, 4.545923789788452], [-76.2220426688634, 4.602939385362584], [-76.2832502375594, 4.594263099079564], [-76.30038835679429, 4.653757633591702], [-76.29794005404645, 4.698378534475806], [-76.19388718726323, 4.682265431378768]]], "type": "Polygon"}, "id": "30", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "863", "MPIO_CCNCT": "76863", "MPIO_CNMBR": "VERSALLES", "MPIO_CRSLC": "Decreto 418 de Mayo 7 de 1909", "MPIO_NANO": 2018, "MPIO_NAREA": 200.597259552, "Shape_Area": 0.0163256479712, "Shape_Leng": 0.814830845479, "ejecutado": 2991564377.0, "ejecutado_fmt": "$ 2.991.564.377", "key": "VERSALLES", "name_norm": "VERSALLES", "nombre_bonito": "Versalles", "programado": 195853167.0, "programado_fmt": "$ 195.853.167"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.40076876945575, 3.740268634936576], [-76.42647594830807, 3.694408264583469], [-76.42647594830807, 3.680774100424437], [-76.50604578761289, 3.699366142459481], [-76.5366495719609, 3.748944921219596], [-76.46809709502136, 3.830749906173786], [-76.44483821891687, 3.74646598228159], [-76.40076876945575, 3.740268634936576]]], "type": "Polygon"}, "id": "31", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "869", "MPIO_CCNCT": "76869", "MPIO_CNMBR": "VIJES", "MPIO_CRSLC": "Ordenanza 30 de 1925", "MPIO_NANO": 2018, "MPIO_NAREA": 113.773944797, "Shape_Area": 0.00924614458363, "Shape_Leng": 0.602133194654, "ejecutado": 837752704.0, "ejecutado_fmt": "$ 837.752.704", "key": "VIJES", "name_norm": "VIJES", "nombre_bonito": "Vijes", "programado": 167500000.0, "programado_fmt": "$ 167.500.000"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.30038835679429, 4.048896532718295], [-76.3126298705335, 3.993120406613164], [-76.37261328785559, 3.812157864138744], [-76.39709631533398, 3.762579085378628], [-76.40076876945575, 3.740268634936576], [-76.44483821891687, 3.74646598228159], [-76.46809709502136, 3.830749906173786], [-76.47789030601272, 3.865455051305867], [-76.42402764556023, 3.942302158384047], [-76.41545858594279, 4.009233509710201], [-76.30283665954212, 4.067488574753337], [-76.30038835679429, 4.048896532718295]]], "type": "Polygon"}, "id": "32", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "890", "MPIO_CCNCT": "76890", "MPIO_CNMBR": "YOTOCO", "MPIO_CRSLC": "1912", "MPIO_NANO": 2018, "MPIO_NAREA": 327.800545665, "Shape_Area": 0.0266475347104, "Shape_Leng": 1.3418275483, "ejecutado": 1819522836.0, "ejecutado_fmt": "$ 1.819.522.836", "key": "YOTOCO", "name_norm": "YOTOCO", "nombre_bonito": "Yotoco", "programado": 54700234.0, "programado_fmt": "$ 54.700.234"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.42647594830807, 3.680774100424437], [-76.49135597112584, 3.506008905295031], [-76.54766693432617, 3.499811557950016], [-76.59173638378729, 3.546911397772126], [-76.50604578761289, 3.699366142459481], [-76.42647594830807, 3.680774100424437]]], "type": "Polygon"}, "id": "33", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "892", "MPIO_CCNCT": "76892", "MPIO_CNMBR": "YUMBO", "MPIO_CRSLC": "1864", "MPIO_NANO": 2018, "MPIO_NAREA": 230.589698953, "Shape_Area": 0.018735349762, "Shape_Leng": 0.764906187984, "ejecutado": 6502754294.0, "ejecutado_fmt": "$ 6.502.754.294", "key": "YUMBO", "name_norm": "YUMBO", "nombre_bonito": "Yumbo", "programado": 698132741.0, "programado_fmt": "$ 698.132.741"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.8951942520267, 4.425695251295172], [-75.87805613279183, 4.409582148198133], [-75.95150521522703, 4.372398064128047], [-75.95395351797487, 4.325298224305937], [-76.02128184354048, 4.301748304394883], [-76.03719581140145, 4.255887934041777], [-76.08371356361042, 4.243493239351748], [-76.17185246253267, 4.31786140749192], [-76.14859358642819, 4.372398064128047], [-76.06902374712337, 4.455442518551241], [-76.03841996277536, 4.465358274303265], [-75.95762597209664, 4.402145331384117], [-75.8951942520267, 4.425695251295172]]], "type": "Polygon"}, "id": "34", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "895", "MPIO_CCNCT": "76895", "MPIO_CNMBR": "ZARZAL", "MPIO_CRSLC": "Decreto 155 de 1909", "MPIO_NANO": 2018, "MPIO_NAREA": 367.93726727, "Shape_Area": 0.0299401535541, "Shape_Leng": 1.25720712191, "ejecutado": 725855284.0, "ejecutado_fmt": "$ 725.855.284", "key": "ZARZAL", "name_norm": "ZARZAL", "nombre_bonito": "Zarzal", "programado": 245056013.0, "programado_fmt": "$ 245.056.013"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-75.88050443553966, 4.531050156160417], [-75.86948707317438, 4.454203049082238], [-75.8951942520267, 4.425695251295172], [-75.95762597209664, 4.402145331384117], [-76.03841996277536, 4.465358274303265], [-76.06902374712337, 4.455442518551241], [-76.06535129300161, 4.492626602621327], [-76.03107505453184, 4.569473709699507], [-75.96374672896623, 4.531050156160417], [-75.88050443553966, 4.531050156160417]]], "type": "Polygon"}, "id": "35", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "403", "MPIO_CCNCT": "76403", "MPIO_CNMBR": "LA VICTORIA", "MPIO_CRSLC": "1835", "MPIO_NANO": 2018, "MPIO_NAREA": 264.697798534, "Shape_Area": 0.0215450505324, "Shape_Leng": 0.916313961015, "ejecutado": 1676704777.0, "ejecutado_fmt": "$ 1.676.704.777", "key": "LA VICTORIA", "name_norm": "LA VICTORIA", "nombre_bonito": "La Victoria", "programado": 276214730.0, "programado_fmt": "$ 276.214.730"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.03841996277536, 4.583107873858538], [-76.03107505453184, 4.569473709699507], [-76.06535129300161, 4.492626602621327], [-76.16573170566306, 4.512458114125373], [-76.18531812764579, 4.545923789788452], [-76.15104188917603, 4.57567105704452], [-76.03841996277536, 4.583107873858538]]], "type": "Polygon"}, "id": "36", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "400", "MPIO_CCNCT": "76400", "MPIO_CNMBR": "LA UNI\u00d3N", "MPIO_CRSLC": "Ordenanza 15 de 1890", "MPIO_NANO": 2018, "MPIO_NAREA": 120.874948972, "Shape_Area": 0.00983772757484, "Shape_Leng": 0.538919233628, "ejecutado": 1022274467.0, "ejecutado_fmt": "$ 1.022.274.467", "key": "LA UNION", "name_norm": "LA UNION", "nombre_bonito": "La Uni\u00f3n", "programado": 298005370.0, "programado_fmt": "$ 298.005.370"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.56113259943929, 3.848102478739827], [-76.60275374615259, 3.751423860157602], [-76.5366495719609, 3.748944921219596], [-76.50604578761289, 3.699366142459481], [-76.59173638378729, 3.546911397772126], [-76.59540883790906, 3.548150867241128], [-76.64927149836154, 3.632434791133325], [-76.64437489286587, 3.78488953582068], [-76.59296053516121, 3.862976112367862], [-76.56113259943929, 3.848102478739827]]], "type": "Polygon"}, "id": "37", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "377", "MPIO_CCNCT": "76377", "MPIO_CNMBR": "LA CUMBRE", "MPIO_CRSLC": "1913", "MPIO_NANO": 2018, "MPIO_NAREA": 255.414894239, "Shape_Area": 0.0207521371215, "Shape_Leng": 1.03526271558, "ejecutado": 1932476167.0, "ejecutado_fmt": "$ 1.932.476.167", "key": "LA CUMBRE", "name_norm": "LA CUMBRE", "nombre_bonito": "La Cumbre", "programado": 140000000.0, "programado_fmt": "$ 140.000.000"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.49258012249976, 3.289101748219526], [-76.46075218677784, 3.259354480963457], [-76.50359748486504, 3.144083820346188], [-76.55746014531753, 3.10194185840009], [-76.67742697996171, 3.099462919462084], [-76.74965191102301, 3.146562759284194], [-76.78270399811885, 3.23084668317639], [-76.70191000744012, 3.356033099545681], [-76.69578925057051, 3.311412198661578], [-76.60765035164826, 3.313891137599583], [-76.55868429669145, 3.282904400874512], [-76.49258012249976, 3.289101748219526]]], "type": "Polygon"}, "id": "38", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "364", "MPIO_CCNCT": "76364", "MPIO_CNMBR": "JAMUND\u00cd", "MPIO_CRSLC": "1536", "MPIO_NANO": 2018, "MPIO_NAREA": 628.964341095, "Shape_Area": 0.051074228142, "Shape_Leng": 1.66851408598, "ejecutado": 4258890779.0, "ejecutado_fmt": "$ 4.258.890.779", "key": "JAMUNDI", "name_norm": "JAMUNDI", "nombre_bonito": "Jamund\u00ed", "programado": 411539227.0, "programado_fmt": "$ 411.539.227"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.26856042107237, 4.481471377400302], [-76.25631890733317, 4.402145331384117], [-76.14859358642819, 4.372398064128047], [-76.17185246253267, 4.31786140749192], [-76.21224945787203, 4.259606342448786], [-76.29671590267253, 4.294311487580865], [-76.40688952632534, 4.299269365456878], [-76.45463142990823, 4.229859075192715], [-76.48768351700409, 4.236056422537731], [-76.54889108570009, 4.337692918995966], [-76.53909787470873, 4.395947984039102], [-76.48156276013448, 4.414540026074146], [-76.36526837961206, 4.492626602621327], [-76.26856042107237, 4.481471377400302]]], "type": "Polygon"}, "id": "39", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "100", "MPIO_CCNCT": "76100", "MPIO_CNMBR": "BOL\u00cdVAR", "MPIO_CRSLC": "Ordenanza 2 de 1884", "MPIO_NANO": 2018, "MPIO_NAREA": 743.572072476, "Shape_Area": 0.0604826480915, "Shape_Leng": 1.5372119483, "ejecutado": 2197801762.0, "ejecutado_fmt": "$ 2.197.801.762", "key": "BOLIVAR", "name_norm": "BOLIVAR", "nombre_bonito": "Bol\u00edvar", "programado": 422708444.0, "programado_fmt": "$ 422.708.444"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.59296053516121, 3.862976112367862], [-76.64437489286587, 3.78488953582068], [-76.64927149836154, 3.632434791133325], [-76.59540883790906, 3.548150867241128], [-76.65049564973546, 3.466345882286938], [-76.7068066129358, 3.427922328747849], [-76.74842775964909, 3.434119676092863], [-76.85492892918015, 3.564263970338167], [-76.79372136048413, 3.6646609973274], [-76.8218768420843, 3.705563489804495], [-76.77535908987532, 3.762579085378628], [-76.81453193384077, 3.875370807057891], [-76.71415152117932, 3.841905131394812], [-76.59296053516121, 3.862976112367862]]], "type": "Polygon"}, "id": "40", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "233", "MPIO_CCNCT": "76233", "MPIO_CNMBR": "DAGUA", "MPIO_CRSLC": "Ordenanza 23 de 1918", "MPIO_NANO": 2018, "MPIO_NAREA": 916.324795732, "Shape_Area": 0.0744313469656, "Shape_Leng": 1.70890159326, "ejecutado": 9607792862.0, "ejecutado_fmt": "$ 9.607.792.862", "key": "DAGUA", "name_norm": "DAGUA", "nombre_bonito": "Dagua", "programado": 684703280.0, "programado_fmt": "$ 684.703.280"}, "type": "Feature"}, {"geometry": {"coordinates": [[[-76.85982553467582, 4.030304490683251], [-76.88798101627599, 3.993120406613164], [-76.81453193384077, 3.875370807057891], [-76.77535908987532, 3.762579085378628], [-76.8218768420843, 3.705563489804495], [-76.79372136048413, 3.6646609973274], [-76.85492892918015, 3.564263970338167], [-76.74842775964909, 3.434119676092863], [-76.7068066129358, 3.427922328747849], [-76.70191000744012, 3.356033099545681], [-76.78270399811885, 3.23084668317639], [-76.78882475498845, 3.218451988486361], [-76.90879158963263, 3.201099415920321], [-76.93817122260671, 3.114336553090119], [-76.9981546399288, 3.155239045567214], [-77.1009833553381, 3.184986312823283], [-77.17810489189507, 3.156478515036217], [-77.2344158550954, 3.108139205745104], [-77.31643399714805, 3.173831087602258], [-77.34703778149606, 3.14036541193918], [-77.43028007492263, 3.254396603087445], [-77.49760840048825, 3.215973049548356], [-77.55024690956681, 3.23084668317639], [-77.48047028125336, 3.322567423882604], [-77.3372445705047, 3.447753840251895], [-77.36662420347878, 3.483698454852979], [-77.3005200292871, 3.570461317683181], [-77.2282950982258, 3.58285601237321], [-77.18422564876468, 3.654745241575377], [-77.1976913138778, 3.74646598228159], [-77.18055319464291, 3.83198937564279], [-77.28338191005221, 3.841905131394812], [-77.31765814852197, 3.949738975198063], [-77.21238113036483, 4.009233509710201], [-77.24298491471285, 4.083601677850375], [-77.31398569440022, 4.029065021214247], [-77.35927929523527, 3.92618905528701], [-77.44986649690536, 4.038980776966271], [-77.35315853836566, 4.197632868998641], [-77.30664078615669, 4.165406662804566], [-77.15851846991235, 4.182759235370606], [-77.04956899763346, 4.094756903071401], [-76.99448218580704, 4.120785761920462], [-76.91491234650223, 4.095996372540403], [-76.85982553467582, 4.030304490683251]]], "type": "Polygon"}, "id": "41", "properties": {"DPTO_CCDGO": "76", "DPTO_CNMBR": "VALLE DEL CAUCA", "MPIO_CCDGO": "109", "MPIO_CCNCT": "76109", "MPIO_CNMBR": "BUENAVENTURA", "MPIO_CRSLC": "1872", "MPIO_NANO": 2018, "MPIO_NAREA": 6292.41025627, "Shape_Area": 0.510778313775, "Shape_Leng": 6.61827764015, "ejecutado": 20355166087.0, "ejecutado_fmt": "$ 20.355.166.087", "key": "BUENAVENTURA", "name_norm": "BUENAVENTURA", "nombre_bonito": "Buenaventura", "programado": 6409851764.0, "programado_fmt": "$ 6.409.851.764"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+    geo_json_8f65049b9a60dbd0dee81be5d04e9269.bindTooltip(
+    function(layer){
+    let div = L.DomUtil.create('div');
+    
+    let handleObject = feature => {
+        if (feature === null) {
+            return '';
+        } else if (typeof(feature)=='object') {
+            return JSON.stringify(feature);
+        } else {
+            return feature;
+        }
+    }
+    let fields = ["nombre_bonito"];
+    let aliases = ["Municipio:"];
+    let table = '<table>' +
+        String(
+        fields.map(
+        (v,i)=>
+        `<tr>
+            <th>${aliases[i]}</th>
+            
+            <td>${handleObject(layer.feature.properties[v])}</td>
+        </tr>`).join(''))
+    +'</table>';
+    div.innerHTML=table;
+    
+    return div
+    }
+    ,{
+  "sticky": true,
+  "className": "foliumtooltip",
+});
+                     
+    
+    geo_json_8f65049b9a60dbd0dee81be5d04e9269.bindPopup(
+    function(layer){
+    let div = L.DomUtil.create('div');
+    
+    let handleObject = feature => {
+        if (feature === null) {
+            return '';
+        } else if (typeof(feature)=='object') {
+            return JSON.stringify(feature);
+        } else {
+            return feature;
+        }
+    }
+    let fields = ["nombre_bonito", "ejecutado_fmt", "programado_fmt"];
+    let aliases = ["Municipio:", "Valor ejecutado (2020-2025):", "Valor programado (2026):"];
+    let table = '<table>' +
+        String(
+        fields.map(
+        (v,i)=>
+        `<tr>
+            <th>${aliases[i].toLocaleString()}</th>
+            
+            <td>${handleObject(layer.feature.properties[v]).toLocaleString()}</td>
+        </tr>`).join(''))
+    +'</table>';
+    div.innerHTML=table;
+    
+    return div
+    }
+    ,{
+  "className": "foliumpopup",
+});
+                     
+    
+            geo_json_8f65049b9a60dbd0dee81be5d04e9269.addTo(map_43be01029d9ea893d62eb526608e14a3);
+        
+    
+            map_43be01029d9ea893d62eb526608e14a3.fitBounds(
+                [[3.099462919462084, -77.55024690956681], [5.046669455265617, -75.70912324319083]],
+                {}
+            );
+        
+</script>
+</html>
