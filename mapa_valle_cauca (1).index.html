@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mapa de inversión por municipio - Valle del Cauca</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+  :root {
+    --bg: #0f1620;
+    --panel: #16202c;
+    --border: #263241;
+    --text: #e7edf3;
+    --muted: #93a3b5;
+    --accent: #f2b632;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+  }
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .layout {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .map-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .btn {
+    background: #1c2836;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn:hover { background: #24313f; }
+  .btn.active {
+    background: var(--accent);
+    color: #1a1300;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  svg { width: 100%; height: auto; display: block; }
+  path.muni {
+    stroke: #0f1620;
+    stroke-width: 0.8px;
+    cursor: pointer;
+    transition: opacity .1s;
+  }
+  path.muni:hover { opacity: 0.75; stroke: var(--accent); stroke-width: 1.6px; }
+  .label {
+    font-size: 6.5px;
+    fill: #0f1620;
+    text-anchor: middle;
+    pointer-events: none;
+    font-weight: 600;
+  }
+  .tooltip {
+    position: fixed;
+    background: #1c2836;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .1s;
+    z-index: 10;
+    max-width: 240px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  }
+  .tooltip b { color: var(--accent); }
+  .note { font-size: 11px; color: var(--muted); margin-top: 14px; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<h1>Inversión por municipio &mdash; Valle del Cauca</h1>
+<div class="subtitle">Valor ejecutado (2020&ndash;2025) y programado (2026), en pesos colombianos (COP)</div>
+
+<div class="layout">
+  <div class="map-panel">
+    <div class="controls">
+      <button class="btn active" data-mode="ejecutado">Ejecutado 2020&ndash;2025</button>
+      <button class="btn" data-mode="programado">Programado 2026</button>
+    </div>
+    <svg id="map" viewBox="0 0 640 620"></svg>
+    <div class="note">Nota: Santiago de Cali concentra un valor muy superior al resto de municipios, por lo que el color se calcula con una escala logarítmica para que se puedan distinguir las diferencias entre los demás municipios. Pase el cursor sobre cada municipio para ver el detalle exacto. Límites municipales: Marco Geoestadístico Nacional (DANE, 2018).</div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const geoData = {"type": "FeatureCollection", "features": [{"id": 58, "type": "Feature", "properties": {"MPIO_CNMBR": "CALI", "MPIO_CCDGO": "001"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.4914, 3.506], [-76.4754, 3.4515], [-76.4608, 3.3288], [-76.4926, 3.2891], [-76.5587, 3.2829], [-76.6077, 3.3139], [-76.6958, 3.3114], [-76.7019, 3.356], [-76.7068, 3.4279], [-76.6505, 3.4663], [-76.5954, 3.5482], [-76.5917, 3.5469], [-76.5477, 3.4998], [-76.4914, 3.506]]]}}, {"id": 59, "type": "Feature", "properties": {"MPIO_CNMBR": "ANDALUCÍA", "MPIO_CCDGO": "036"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.0715, 4.0886], [-76.1719, 4.1195], [-76.2453, 4.1679], [-76.249, 4.184], [-76.2355, 4.2137], [-76.151, 4.1828], [-76.0715, 4.0886]]]}}, {"id": 60, "type": "Feature", "properties": {"MPIO_CNMBR": "ANSERMANUEVO", "MPIO_CCDGO": "041"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.9895, 4.8806], [-75.9148, 4.8731], [-75.9356, 4.8075], [-75.9637, 4.8013], [-76.0164, 4.6922], [-76.0886, 4.7356], [-76.1474, 4.7851], [-76.1388, 4.8409], [-76.1376, 4.8434], [-76.0715, 4.8372], [-75.9895, 4.8806]]]}}, {"id": 61, "type": "Feature", "properties": {"MPIO_CNMBR": "ARGELIA", "MPIO_CCDGO": "054"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.0886, 4.7356], [-76.1229, 4.6513], [-76.1939, 4.6823], [-76.1474, 4.7851], [-76.0886, 4.7356]]]}}, {"id": 62, "type": "Feature", "properties": {"MPIO_CNMBR": "GUADALAJARA DE BUGA", "MPIO_CCDGO": "111"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.3126, 3.9931], [-76.2269, 3.9324], [-76.1412, 3.9039], [-76.1009, 3.9572], [-76.0837, 3.9064], [-75.998, 3.894], [-75.8732, 3.9262], [-75.8499, 3.889], [-75.9172, 3.7489], [-75.9552, 3.7142], [-75.9992, 3.7564], [-76.0825, 3.77], [-76.1045, 3.8196], [-76.178, 3.8047], [-76.2771, 3.8382], [-76.3726, 3.8122], [-76.3126, 3.9931]]]}}, {"id": 63, "type": "Feature", "properties": {"MPIO_CNMBR": "BUGALAGRANDE", "MPIO_CCDGO": "113"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.0372, 4.2559], [-75.954, 4.1766], [-76.0017, 4.1022], [-76.0715, 4.0886], [-76.151, 4.1828], [-76.2355, 4.2137], [-76.2122, 4.2596], [-76.1719, 4.3179], [-76.0837, 4.2435], [-76.0372, 4.2559]]]}}, {"id": 64, "type": "Feature", "properties": {"MPIO_CNMBR": "CAICEDONIA", "MPIO_CCDGO": "122"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.8034, 4.3959], [-75.7924, 4.3377], [-75.7948, 4.3104], [-75.8254, 4.215], [-75.8927, 4.2993], [-75.8548, 4.3637], [-75.867, 4.4108], [-75.8034, 4.3959]]]}}, {"id": 65, "type": "Feature", "properties": {"MPIO_CNMBR": "CALIMA", "MPIO_CCDGO": "126"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.4987, 4.0638], [-76.4155, 4.0092], [-76.424, 3.9423], [-76.4779, 3.8655], [-76.5611, 3.8481], [-76.593, 3.863], [-76.7142, 3.8419], [-76.8145, 3.8754], [-76.888, 3.9931], [-76.8598, 4.0303], [-76.6811, 3.9646], [-76.6248, 4.0154], [-76.5893, 3.9931], [-76.4987, 4.0638]]]}}, {"id": 66, "type": "Feature", "properties": {"MPIO_CNMBR": "CANDELARIA", "MPIO_CCDGO": "130"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.2906, 3.4713], [-76.3298, 3.3833], [-76.3004, 3.3659], [-76.3432, 3.2817], [-76.3518, 3.2866], [-76.4608, 3.3288], [-76.4754, 3.4515], [-76.3751, 3.4502], [-76.2906, 3.4713]]]}}, {"id": 67, "type": "Feature", "properties": {"MPIO_CNMBR": "CARTAGO", "MPIO_CCDGO": "147"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.9356, 4.8075], [-75.856, 4.7281], [-75.856, 4.7133], [-75.8279, 4.66], [-75.8658, 4.6129], [-75.9723, 4.6674], [-76.0164, 4.6662], [-76.0164, 4.6922], [-75.9637, 4.8013], [-75.9356, 4.8075]]]}}, {"id": 68, "type": "Feature", "properties": {"MPIO_CNMBR": "EL ÁGUILA", "MPIO_CCDGO": "243"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.9907, 4.9128], [-75.9895, 4.8806], [-76.0715, 4.8372], [-76.1376, 4.8434], [-76.0886, 4.9463], [-76.0776, 5.0467], [-76.0274, 4.9388], [-75.9907, 4.9128]]]}}, {"id": 69, "type": "Feature", "properties": {"MPIO_CNMBR": "EL CAIRO", "MPIO_CCDGO": "246"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.1474, 4.7851], [-76.1939, 4.6823], [-76.2979, 4.6984], [-76.3126, 4.7504], [-76.211, 4.8298], [-76.1388, 4.8409], [-76.1474, 4.7851]]]}}, {"id": 70, "type": "Feature", "properties": {"MPIO_CNMBR": "EL CERRITO", "MPIO_CCDGO": "248"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.9552, 3.7142], [-75.9601, 3.7043], [-76.0066, 3.7167], [-76.0898, 3.6213], [-76.2416, 3.6213], [-76.293, 3.6027], [-76.3677, 3.6275], [-76.4265, 3.6944], [-76.4008, 3.7403], [-76.3971, 3.7626], [-76.3212, 3.7068], [-76.2012, 3.6622], [-76.1241, 3.6882], [-76.0825, 3.77], [-75.9992, 3.7564], [-75.9552, 3.7142]]]}}, {"id": 71, "type": "Feature", "properties": {"MPIO_CNMBR": "EL DOVIO", "MPIO_CCDGO": "250"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.1853, 4.5459], [-76.1657, 4.5125], [-76.2686, 4.4815], [-76.3653, 4.4926], [-76.3004, 4.6538], [-76.2833, 4.5943], [-76.222, 4.6029], [-76.1853, 4.5459]]]}}, {"id": 72, "type": "Feature", "properties": {"MPIO_CNMBR": "FLORIDA", "MPIO_CCDGO": "275"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.0617, 3.3548], [-76.0384, 3.3015], [-76.0556, 3.2234], [-76.1914, 3.2271], [-76.2294, 3.2767], [-76.3432, 3.2817], [-76.3004, 3.3659], [-76.1816, 3.3573], [-76.0886, 3.3883], [-76.0617, 3.3548]]]}}, {"id": 73, "type": "Feature", "properties": {"MPIO_CNMBR": "GINEBRA", "MPIO_CCDGO": "306"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.0825, 3.77], [-76.1241, 3.6882], [-76.2012, 3.6622], [-76.3212, 3.7068], [-76.3028, 3.7601], [-76.2208, 3.7688], [-76.178, 3.8047], [-76.1045, 3.8196], [-76.0825, 3.77]]]}}, {"id": 74, "type": "Feature", "properties": {"MPIO_CNMBR": "GUACARÍ", "MPIO_CCDGO": "318"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.178, 3.8047], [-76.2208, 3.7688], [-76.3028, 3.7601], [-76.3212, 3.7068], [-76.3971, 3.7626], [-76.3726, 3.8122], [-76.2771, 3.8382], [-76.178, 3.8047]]]}}, {"id": 75, "type": "Feature", "properties": {"MPIO_CNMBR": "ALCALÁ", "MPIO_CCDGO": "020"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.7091, 4.6798], [-75.741, 4.655], [-75.8279, 4.66], [-75.856, 4.7133], [-75.7091, 4.6798]]]}}, {"id": 76, "type": "Feature", "properties": {"MPIO_CNMBR": "OBANDO", "MPIO_CCDGO": "497"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.8658, 4.6129], [-75.867, 4.5757], [-75.8805, 4.5311], [-75.9637, 4.5311], [-76.0311, 4.5695], [-76.0384, 4.5831], [-76.0164, 4.6662], [-75.9723, 4.6674], [-75.8658, 4.6129]]]}}, {"id": 77, "type": "Feature", "properties": {"MPIO_CNMBR": "PALMIRA", "MPIO_CCDGO": "520"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.9601, 3.7043], [-75.9931, 3.6089], [-75.9846, 3.5593], [-76.0372, 3.4527], [-76.1217, 3.4763], [-76.2906, 3.4713], [-76.3751, 3.4502], [-76.4754, 3.4515], [-76.4914, 3.506], [-76.4265, 3.6808], [-76.4265, 3.6944], [-76.3677, 3.6275], [-76.293, 3.6027], [-76.2416, 3.6213], [-76.0898, 3.6213], [-76.0066, 3.7167], [-75.9601, 3.7043]]]}}, {"id": 78, "type": "Feature", "properties": {"MPIO_CNMBR": "PRADERA", "MPIO_CCDGO": "563"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.0372, 3.4527], [-76.0617, 3.3548], [-76.0886, 3.3883], [-76.1816, 3.3573], [-76.3004, 3.3659], [-76.3298, 3.3833], [-76.2906, 3.4713], [-76.1217, 3.4763], [-76.0372, 3.4527]]]}}, {"id": 79, "type": "Feature", "properties": {"MPIO_CNMBR": "RESTREPO", "MPIO_CCDGO": "606"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.4779, 3.8655], [-76.4681, 3.8307], [-76.5366, 3.7489], [-76.6028, 3.7514], [-76.5611, 3.8481], [-76.4779, 3.8655]]]}}, {"id": 80, "type": "Feature", "properties": {"MPIO_CNMBR": "RIOFRÍO", "MPIO_CCDGO": "616"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.249, 4.184], [-76.2453, 4.1679], [-76.3028, 4.0675], [-76.4155, 4.0092], [-76.4987, 4.0638], [-76.4485, 4.1617], [-76.3481, 4.1592], [-76.3261, 4.1952], [-76.249, 4.184]]]}}, {"id": 81, "type": "Feature", "properties": {"MPIO_CNMBR": "ROLDANILLO", "MPIO_CCDGO": "622"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.1657, 4.5125], [-76.0654, 4.4926], [-76.069, 4.4554], [-76.1486, 4.3724], [-76.2563, 4.4021], [-76.2686, 4.4815], [-76.1657, 4.5125]]]}}, {"id": 82, "type": "Feature", "properties": {"MPIO_CNMBR": "SAN PEDRO", "MPIO_CCDGO": "670"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.1009, 3.9572], [-76.1412, 3.9039], [-76.2269, 3.9324], [-76.3126, 3.9931], [-76.3004, 4.0489], [-76.1621, 4.0229], [-76.1009, 3.9572]]]}}, {"id": 83, "type": "Feature", "properties": {"MPIO_CNMBR": "SEVILLA", "MPIO_CCDGO": "736"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.867, 4.4108], [-75.8548, 4.3637], [-75.8927, 4.2993], [-75.8254, 4.215], [-75.8401, 4.101], [-75.752, 4.0774], [-75.7458, 4.0427], [-75.823, 3.9051], [-75.8548, 4.0501], [-75.9013, 4.0848], [-75.9136, 4.1753], [-75.954, 4.1766], [-76.0372, 4.2559], [-76.0213, 4.3017], [-75.954, 4.3253], [-75.9515, 4.3724], [-75.8781, 4.4096], [-75.867, 4.4108]]]}}, {"id": 84, "type": "Feature", "properties": {"MPIO_CNMBR": "TORO", "MPIO_CCDGO": "823"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.0164, 4.6922], [-76.0164, 4.6662], [-76.0384, 4.5831], [-76.151, 4.5757], [-76.1229, 4.6513], [-76.0886, 4.7356], [-76.0164, 4.6922]]]}}, {"id": 85, "type": "Feature", "properties": {"MPIO_CNMBR": "TRUJILLO", "MPIO_CCDGO": "828"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.2122, 4.2596], [-76.2355, 4.2137], [-76.249, 4.184], [-76.3261, 4.1952], [-76.3481, 4.1592], [-76.4485, 4.1617], [-76.4546, 4.2299], [-76.4069, 4.2993], [-76.2967, 4.2943], [-76.2122, 4.2596]]]}}, {"id": 86, "type": "Feature", "properties": {"MPIO_CNMBR": "TULUÁ", "MPIO_CCDGO": "834"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.823, 3.9051], [-75.8499, 3.889], [-75.8732, 3.9262], [-75.998, 3.894], [-76.0837, 3.9064], [-76.1009, 3.9572], [-76.1621, 4.0229], [-76.3004, 4.0489], [-76.3028, 4.0675], [-76.2453, 4.1679], [-76.1719, 4.1195], [-76.0715, 4.0886], [-76.0017, 4.1022], [-75.954, 4.1766], [-75.9136, 4.1753], [-75.9013, 4.0848], [-75.8548, 4.0501], [-75.823, 3.9051]]]}}, {"id": 87, "type": "Feature", "properties": {"MPIO_CNMBR": "ULLOA", "MPIO_CCDGO": "845"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.714, 4.7133], [-75.7091, 4.6798], [-75.856, 4.7133], [-75.856, 4.7281], [-75.714, 4.7133]]]}}, {"id": 88, "type": "Feature", "properties": {"MPIO_CNMBR": "VERSALLES", "MPIO_CCDGO": "863"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.1939, 4.6823], [-76.1229, 4.6513], [-76.151, 4.5757], [-76.1853, 4.5459], [-76.222, 4.6029], [-76.2833, 4.5943], [-76.3004, 4.6538], [-76.2979, 4.6984], [-76.1939, 4.6823]]]}}, {"id": 89, "type": "Feature", "properties": {"MPIO_CNMBR": "VIJES", "MPIO_CCDGO": "869"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.4008, 3.7403], [-76.4265, 3.6944], [-76.4265, 3.6808], [-76.506, 3.6994], [-76.5366, 3.7489], [-76.4681, 3.8307], [-76.4448, 3.7465], [-76.4008, 3.7403]]]}}, {"id": 90, "type": "Feature", "properties": {"MPIO_CNMBR": "YOTOCO", "MPIO_CCDGO": "890"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.3004, 4.0489], [-76.3126, 3.9931], [-76.3726, 3.8122], [-76.3971, 3.7626], [-76.4008, 3.7403], [-76.4448, 3.7465], [-76.4681, 3.8307], [-76.4779, 3.8655], [-76.424, 3.9423], [-76.4155, 4.0092], [-76.3028, 4.0675], [-76.3004, 4.0489]]]}}, {"id": 91, "type": "Feature", "properties": {"MPIO_CNMBR": "YUMBO", "MPIO_CCDGO": "892"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.4265, 3.6808], [-76.4914, 3.506], [-76.5477, 3.4998], [-76.5917, 3.5469], [-76.506, 3.6994], [-76.4265, 3.6808]]]}}, {"id": 92, "type": "Feature", "properties": {"MPIO_CNMBR": "ZARZAL", "MPIO_CCDGO": "895"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.8952, 4.4257], [-75.8781, 4.4096], [-75.9515, 4.3724], [-75.954, 4.3253], [-76.0213, 4.3017], [-76.0372, 4.2559], [-76.0837, 4.2435], [-76.1719, 4.3179], [-76.1486, 4.3724], [-76.069, 4.4554], [-76.0384, 4.4654], [-75.9576, 4.4021], [-75.8952, 4.4257]]]}}, {"id": 93, "type": "Feature", "properties": {"MPIO_CNMBR": "LA VICTORIA", "MPIO_CCDGO": "403"}, "geometry": {"type": "Polygon", "coordinates": [[[-75.8805, 4.5311], [-75.8695, 4.4542], [-75.8952, 4.4257], [-75.9576, 4.4021], [-76.0384, 4.4654], [-76.069, 4.4554], [-76.0654, 4.4926], [-76.0311, 4.5695], [-75.9637, 4.5311], [-75.8805, 4.5311]]]}}, {"id": 94, "type": "Feature", "properties": {"MPIO_CNMBR": "LA UNIÓN", "MPIO_CCDGO": "400"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.0384, 4.5831], [-76.0311, 4.5695], [-76.0654, 4.4926], [-76.1657, 4.5125], [-76.1853, 4.5459], [-76.151, 4.5757], [-76.0384, 4.5831]]]}}, {"id": 95, "type": "Feature", "properties": {"MPIO_CNMBR": "LA CUMBRE", "MPIO_CCDGO": "377"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.5611, 3.8481], [-76.6028, 3.7514], [-76.5366, 3.7489], [-76.506, 3.6994], [-76.5917, 3.5469], [-76.5954, 3.5482], [-76.6493, 3.6324], [-76.6444, 3.7849], [-76.593, 3.863], [-76.5611, 3.8481]]]}}, {"id": 96, "type": "Feature", "properties": {"MPIO_CNMBR": "JAMUNDÍ", "MPIO_CCDGO": "364"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.4926, 3.2891], [-76.4608, 3.2594], [-76.5036, 3.1441], [-76.5575, 3.1019], [-76.6774, 3.0995], [-76.7497, 3.1466], [-76.7827, 3.2308], [-76.7019, 3.356], [-76.6958, 3.3114], [-76.6077, 3.3139], [-76.5587, 3.2829], [-76.4926, 3.2891]]]}}, {"id": 97, "type": "Feature", "properties": {"MPIO_CNMBR": "BOLÍVAR", "MPIO_CCDGO": "100"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.2686, 4.4815], [-76.2563, 4.4021], [-76.1486, 4.3724], [-76.1719, 4.3179], [-76.2122, 4.2596], [-76.2967, 4.2943], [-76.4069, 4.2993], [-76.4546, 4.2299], [-76.4877, 4.2361], [-76.5489, 4.3377], [-76.5391, 4.3959], [-76.4816, 4.4145], [-76.3653, 4.4926], [-76.2686, 4.4815]]]}}, {"id": 98, "type": "Feature", "properties": {"MPIO_CNMBR": "DAGUA", "MPIO_CCDGO": "233"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.593, 3.863], [-76.6444, 3.7849], [-76.6493, 3.6324], [-76.5954, 3.5482], [-76.6505, 3.4663], [-76.7068, 3.4279], [-76.7484, 3.4341], [-76.8549, 3.5643], [-76.7937, 3.6647], [-76.8219, 3.7056], [-76.7754, 3.7626], [-76.8145, 3.8754], [-76.7142, 3.8419], [-76.593, 3.863]]]}}, {"id": 99, "type": "Feature", "properties": {"MPIO_CNMBR": "BUENAVENTURA", "MPIO_CCDGO": "109"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.8598, 4.0303], [-76.888, 3.9931], [-76.8145, 3.8754], [-76.7754, 3.7626], [-76.8219, 3.7056], [-76.7937, 3.6647], [-76.8549, 3.5643], [-76.7484, 3.4341], [-76.7068, 3.4279], [-76.7019, 3.356], [-76.7827, 3.2308], [-76.7888, 3.2185], [-76.9088, 3.2011], [-76.9382, 3.1143], [-76.9982, 3.1552], [-77.101, 3.185], [-77.1781, 3.1565], [-77.2344, 3.1081], [-77.3164, 3.1738], [-77.347, 3.1404], [-77.4303, 3.2544], [-77.4976, 3.216], [-77.5502, 3.2308], [-77.4805, 3.3226], [-77.3372, 3.4478], [-77.3666, 3.4837], [-77.3005, 3.5705], [-77.2283, 3.5829], [-77.1842, 3.6547], [-77.1977, 3.7465], [-77.1806, 3.832], [-77.2834, 3.8419], [-77.3177, 3.9497], [-77.2124, 4.0092], [-77.243, 4.0836], [-77.314, 4.0291], [-77.3593, 3.9262], [-77.4499, 4.039], [-77.3532, 4.1976], [-77.3066, 4.1654], [-77.1585, 4.1828], [-77.0496, 4.0948], [-76.9945, 4.1208], [-76.9149, 4.096], [-76.8598, 4.0303]]]}}]};
+const valuesData = [{"input_name": "ALCALA", "geo_name": "ALCALÁ", "ejecutado": 948653570, "programado": 2842836640}, {"input_name": "ANDALUCIA", "geo_name": "ANDALUCÍA", "ejecutado": 4732031621, "programado": 50000000}, {"input_name": "ANSERMANUEVO", "geo_name": "ANSERMANUEVO", "ejecutado": 3156731038, "programado": 322208444}, {"input_name": "ARGELIA", "geo_name": "ARGELIA", "ejecutado": 3081084679, "programado": 283403460}, {"input_name": "BOLIVAR", "geo_name": "BOLÍVAR", "ejecutado": 4640793708, "programado": 457708444}, {"input_name": "BUENAVENTURA", "geo_name": "BUENAVENTURA", "ejecutado": 29321116415, "programado": 6953346310}, {"input_name": "BUGA", "geo_name": "GUADALAJARA DE BUGA", "ejecutado": 10244046925, "programado": 1041266890}, {"input_name": "BUGALAGRANDE", "geo_name": "BUGALAGRANDE", "ejecutado": 1695032213, "programado": 753378091}, {"input_name": "CAICEDONIA", "geo_name": "CAICEDONIA", "ejecutado": 2310924862, "programado": 344121733}, {"input_name": "CALIMA DARIEN", "geo_name": "CALIMA", "ejecutado": 4206051687, "programado": 238344596}, {"input_name": "CANDELARIA", "geo_name": "CANDELARIA", "ejecutado": 2044244439, "programado": 1016298513}, {"input_name": "CARTAGO", "geo_name": "CARTAGO", "ejecutado": 10414418148, "programado": 402821341}, {"input_name": "DAGUA", "geo_name": "DAGUA", "ejecutado": 12496133824, "programado": 724703280}, {"input_name": "EL AGUILA", "geo_name": "EL ÁGUILA", "ejecutado": 2252563400, "programado": 210071428}, {"input_name": "EL CAIRO", "geo_name": "EL CAIRO", "ejecutado": 1791182779, "programado": 356652381}, {"input_name": "EL CERRITO", "geo_name": "EL CERRITO", "ejecutado": 4684520624, "programado": 218012079}, {"input_name": "EL DOVIO", "geo_name": "EL DOVIO", "ejecutado": 19949700141, "programado": 474999999}, {"input_name": "FLORIDA", "geo_name": "FLORIDA", "ejecutado": 15922040639, "programado": 325000000}, {"input_name": "GINEBRA", "geo_name": "GINEBRA", "ejecutado": 1954220189, "programado": 358666667}, {"input_name": "GUACARI", "geo_name": "GUACARÍ", "ejecutado": 3936159307, "programado": 205038913}, {"input_name": "JAMUNDI", "geo_name": "JAMUNDÍ", "ejecutado": 9016036355, "programado": 411539227}, {"input_name": "LA CUMBRE", "geo_name": "LA CUMBRE", "ejecutado": 2739244749, "programado": 140000000}, {"input_name": "LA UNION", "geo_name": "LA UNIÓN", "ejecutado": 2247783565, "programado": 298005370}, {"input_name": "LA VICTORIA", "geo_name": "LA VICTORIA", "ejecutado": 2423161900, "programado": 276214730}, {"input_name": "OBANDO", "geo_name": "OBANDO", "ejecutado": 1582643261, "programado": 323868730}, {"input_name": "PALMIRA", "geo_name": "PALMIRA", "ejecutado": 17205638378, "programado": 2209558430}, {"input_name": "PRADERA", "geo_name": "PRADERA", "ejecutado": 1463194630, "programado": 226352727}, {"input_name": "RESTREPO", "geo_name": "RESTREPO", "ejecutado": 1806459488, "programado": 215785714}, {"input_name": "RIOFRIO", "geo_name": "RIOFRÍO", "ejecutado": 14642229793, "programado": 304187924}, {"input_name": "ROLDANILLO", "geo_name": "ROLDANILLO", "ejecutado": 2719307866, "programado": 518401030}, {"input_name": "SAN PEDRO", "geo_name": "SAN PEDRO", "ejecutado": 2407210621, "programado": 217185714}, {"input_name": "SANTIAGO DE CALI", "geo_name": "CALI", "ejecutado": 276551772214, "programado": 73350172445}, {"input_name": "SEVILLA", "geo_name": "SEVILLA", "ejecutado": 6394799789, "programado": 483094330}, {"input_name": "TORO", "geo_name": "TORO", "ejecutado": 1454075345, "programado": 310396303}, {"input_name": "TRUJILLO", "geo_name": "TRUJILLO", "ejecutado": 1496691687, "programado": 317090589}, {"input_name": "TULUA", "geo_name": "TULUÁ", "ejecutado": 5952925381, "programado": 887880641}, {"input_name": "ULLOA", "geo_name": "ULLOA", "ejecutado": 912788221, "programado": 3704400}, {"input_name": "VERSALLES", "geo_name": "VERSALLES", "ejecutado": 4019223747, "programado": 195853167}, {"input_name": "VIJES", "geo_name": "VIJES", "ejecutado": 1548996896, "programado": 167500000}, {"input_name": "YOTOCO", "geo_name": "YOTOCO", "ejecutado": 4572655232, "programado": 54700234}, {"input_name": "YUMBO", "geo_name": "YUMBO", "ejecutado": 9545820792, "programado": 698132741}, {"input_name": "ZARZAL", "geo_name": "ZARZAL", "ejecutado": 1719604818, "programado": 245056013}];
+
+const valueMap = {};
+valuesData.forEach(d => { valueMap[d.geo_name] = d; });
+
+function fmtCOP(n) {
+  return '$' + n.toLocaleString('es-CO');
+}
+function fmtShort(n) {
+  if (n >= 1e9) return '$' + (n/1e9).toFixed(1) + ' mil M';
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(0) + ' M';
+  return fmtCOP(n);
+}
+
+const width = 640, height = 620;
+const svg = d3.select('#map');
+const projection = d3.geoMercator().fitSize([width, height - 10], geoData);
+const path = d3.geoPath().projection(projection);
+
+let mode = 'ejecutado';
+
+const colorRanges = {
+  ejecutado: d3.extent(valuesData, d => d.ejecutado),
+  programado: d3.extent(valuesData, d => d.programado)
+};
+
+function colorScaleFor(m) {
+  const [lo, hi] = colorRanges[m];
+  return d3.scaleSequentialLog(d3.interpolateYlOrRd).domain([Math.max(lo,1), hi]);
+}
+
+const g = svg.append('g');
+
+const paths = g.selectAll('path')
+  .data(geoData.features)
+  .join('path')
+  .attr('class', 'muni')
+  .attr('d', path)
+  .on('mousemove', function(event, d) {
+    const rec = valueMap[d.properties.MPIO_CNMBR];
+    const tt = d3.select('#tooltip');
+    tt.style('opacity', 1)
+      .style('left', (event.clientX + 16) + 'px')
+      .style('top', (event.clientY + 16) + 'px')
+      .html(rec ?
+        `<div style="font-weight:600;margin-bottom:6px;">${d.properties.MPIO_CNMBR}</div>
+         <div>Ejecutado 2020&ndash;2025: <b>${fmtCOP(rec.ejecutado)}</b></div>
+         <div>Programado 2026: <b>${fmtCOP(rec.programado)}</b></div>`
+        : `<div style="font-weight:600;">${d.properties.MPIO_CNMBR}</div><div>Sin datos</div>`);
+  })
+  .on('mouseleave', function() {
+    d3.select('#tooltip').style('opacity', 0);
+  });
+
+const labels = g.selectAll('text')
+  .data(geoData.features)
+  .join('text')
+  .attr('class', 'label')
+  .attr('transform', d => `translate(${path.centroid(d)})`)
+  .text(d => {
+    const rec = valueMap[d.properties.MPIO_CNMBR];
+    const area = path.area(d);
+    return area > 250 ? d.properties.MPIO_CNMBR : '';
+  });
+
+function render() {
+  const scale = colorScaleFor(mode);
+  paths.attr('fill', d => {
+    const rec = valueMap[d.properties.MPIO_CNMBR];
+    return rec ? scale(Math.max(rec[mode], 1)) : '#2a3644';
+  });
+}
+
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    mode = btn.dataset.mode;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
